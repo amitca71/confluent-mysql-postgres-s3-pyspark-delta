@@ -82,7 +82,7 @@ docker-compose -f docker-compose.yaml exec mysql bash -c 'mysql -u $MYSQL_USER  
 Verify that the PostgreSQL database has the same content:
 
 ```shell
-docker-compose -f docker-compose-jdbc.yaml exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
+docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
  last_name |  id  | first_name |         email         
 -----------+------+------------+-----------------------
  Thomas    | 1001 | Sally      | sally.thomas@acme.com
@@ -96,7 +96,7 @@ docker-compose -f docker-compose-jdbc.yaml exec postgres bash -c 'psql -U $POSTG
 
 Insert a new record into MySQL;
 ```shell
-docker-compose -f docker-compose-jdbc.yaml exec mysql bash -c 'mysql -u $MYSQL_USER  -p$MYSQL_PASSWORD inventory'
+docker-compose  exec mysql bash -c 'mysql -u $MYSQL_USER  -p$MYSQL_PASSWORD inventory'
 mysql> insert into customers values(default, 'John', 'Doe', 'john.doe@example.com');
 Query OK, 1 row affected (0.02 sec)
 ```
@@ -104,7 +104,7 @@ Query OK, 1 row affected (0.02 sec)
 Verify that PostgreSQL contains the new record:
 
 ```shell
-docker-compose -f docker-compose-jdbc.yaml exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
+docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
  last_name |  id  | first_name |         email         
 -----------+------+------------+-----------------------
 ...
@@ -125,7 +125,7 @@ Rows matched: 1  Changed: 1  Warnings: 0
 Verify that record in PostgreSQL is updated:
 
 ```shell
-docker-compose -f docker-compose-jdbc.yaml  exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
+docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
  last_name |  id  | first_name |         email         
 -----------+------+------------+-----------------------
 ...
@@ -145,7 +145,7 @@ Query OK, 1 row affected (0.01 sec)
 Verify that record in PostgreSQL is deleted:
 
 ```shell
-docker-compose -f docker-compose.yaml  exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
+docker-compose  exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "select * from customers"'
  last_name |  id  | first_name |         email         
 -----------+------+------------+-----------------------
 ...

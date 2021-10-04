@@ -8,15 +8,6 @@
     * [New record](#new-record)
     * [Record update](#record-update)
     * [Record delete](#record-delete)
-* [Elasticsearch Sink](#elasticsearch-sink)
-  * [Topology](#topology-1)
-  * [Usage](#usage-1)
-    * [New record](#new-record-1)
-    * [Record update](#record-update-1)
-    * [Record delete](#record-delete-1)
-* [Two Parallel Sinks](#two-parallel-sinks)
-  * [Topology](#topology-2)
-  * [Usage](#usage-2)
 
 ## JDBC Sink
 
@@ -62,9 +53,10 @@ We are using Docker Compose to deploy following components
 How to run:
 
 ```shell
-# Start the application
-export DEBEZIUM_VERSION=1.4
-docker-compose up
+docker-compose up -d
+
+# see control-center on http://localhost:9021/
+
 
 # Start PostgreSQL connector
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @jdbc-sink.json

@@ -1,4 +1,4 @@
-# confluent
+# confluent Mysql to Postgresql using Mysql debezium CDC connector
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@
                    +-------------+
                    |             |
                    |    MySQL    |
-                   |     CDC     |
+                   |             |
                    +------+------+
                           |
                           |

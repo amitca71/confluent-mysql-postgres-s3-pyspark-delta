@@ -68,7 +68,7 @@ curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json"
 Check contents of the MySQL database:
 
 ```shell
-docker-compose -f docker-compose.yaml exec mysql bash -c 'mysql -u $MYSQL_USER  -p$MYSQL_PASSWORD inventory -e "select * from customers"'
+docker-compose exec mysql bash -c 'mysql -u $MYSQL_USER  -p$MYSQL_PASSWORD inventory -e "select * from customers"'
 +------+------------+-----------+-----------------------+
 | id   | first_name | last_name | email                 |
 +------+------------+-----------+-----------------------+

@@ -196,3 +196,21 @@ services:
       - POSTGRES_USER=postgresuser
       - POSTGRES_PASSWORD=postgrespw
       - POSTGRES_DB=inventory
+  s3:
+    image: minio/minio
+    container_name: s3
+    volumes:
+        - ./buckets:/data:consistent
+    expose:
+        - "9000"
+    ports:
+        - "9000:9000"
+    environment:
+        - MINIO_ACCESS_KEY=minio
+        - MINIO_SECRET_KEY=minio123
+    command: minio server /data
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+        interval: 30s
+        timeout: 20s
+        retries: 3

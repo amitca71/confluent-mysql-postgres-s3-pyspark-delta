@@ -1,4 +1,4 @@
-# confluent Mysql to Postgresql using Mysql debezium CDC connector
+# confluent Mysql to Postgresql using Mysql debezium CDC connector with pyspark and S3
 
 ## Table of Contents
 
@@ -8,35 +8,13 @@
     * [New record](#new-record)
     * [Record update](#record-update)
     * [Record delete](#record-delete)
+    * [Spark](#spark)
 
 ## JDBC Sink
 
 ### Topology
 
-```
-                   +-------------+
-                   |             |
-                   |    MySQL    |
-                   |             |
-                   +------+------+
-                          |
-                          |
-                          |
-          +---------------v------------------+
-          |                                  |
-          |           Kafka Connect          |
-          |  (Debezium, JDBC connectors)     |
-          |                                  |
-          +---------------+------------------+
-                          |
-                          |
-                          |
-                          |
-                  +-------v--------+
-                  |                |
-                  |   PostgreSQL   |
-                  |                |
-                  +----------------+
+``![image](https://user-images.githubusercontent.com/5821916/138133712-af2797da-c569-4163-9621-07cfc345a276.png)
 
 
 ```
@@ -47,7 +25,12 @@ We are using Docker Compose to deploy following components
   * Kafka Broker
   * Kafka Connect with [Debezium](https://debezium.io/) and  [JDBC](https://github.com/confluentinc/kafka-connect-jdbc) Connectors
 * PostgreSQL
-
+* minio - local S3 
+* Spark
+  * master
+  * spark-worker-1
+  * spark-worker-2
+  * pyspark jupyter notebook
 ### Usage
 
 How to run:
@@ -55,14 +38,18 @@ How to run:
 ```shell
 docker-compose up -d
 
-# see control-center on http://localhost:9021/
+# see kafka confluent control-center on http://localhost:9021/ 
 
 
 # Start PostgreSQL connector
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @jdbc-sink.json
 
+# Start S3 minio connector
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @s3-minio-sink.json
+
 # Start MySQL connector
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @source.json
+
 ```
 
 Check contents of the MySQL database:
@@ -91,6 +78,9 @@ docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "se
  Kretchmar | 1004 | Anne       | annek@noanswer.org
 (4 rows)
 ```
+
+
+
 
 #### New record
 
@@ -155,8 +145,22 @@ docker-compose  exec postgres bash -c 'psql -U $POSTGRES_USER $POSTGRES_DB -c "s
 As you can see there is no longer a 'Jane Doe' as a customer.
 
 
+
+
+#### spark 
+get notebook token: 
+```shell
+docker-compose exec pyspark bash -c "jupyter server list"
+```
+
+open localhost:9999
+
+open work/write_read_to_minio.ipynb
+
+see http://localhost:8080/ for the workers and DAG image
+
+# Shut down the cluster
 End application:
 
 ```shell
-# Shut down the cluster
 docker-compose down

@@ -1,4 +1,4 @@
-# confluent Mysql to Postgresql using Mysql debezium CDC connector with pyspark and S3
+# confluent Mysql to Postgresql using Mysql debezium CDC connector with pyspark and S3 using deltalake
 
 ## Table of Contents
 

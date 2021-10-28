@@ -1,4 +1,4 @@
-# confluent Mysql to Postgresql using Mysql debezium CDC connector with pyspark and S3 using deltalake
+# delta lake poc implementation.  kafka connect (Mysql debezium CDC and S3 connectors) S3 spark+deltalake
 
 ## Table of Contents
 

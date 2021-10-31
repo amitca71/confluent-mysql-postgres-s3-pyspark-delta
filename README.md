@@ -107,7 +107,7 @@ Doe        | 1005 | John       | john.doe@example.com
 Update a record in MySQL:
 
 ```shell
-mysql> update customers set first_name='Jane', last_name='Roe' where last_name='Doe';
+mysql> update customers set first_name='Jane', last_name='changed' where last_name='Thomas';
 Query OK, 1 row affected (0.02 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 ```

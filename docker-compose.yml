@@ -292,7 +292,7 @@ services:
     image: jupyter/pyspark-notebook:latest
     environment:
       - JUPYTER_ENABLE_LAB="no"
-      - PYSPARK_SUBMIT_ARGS=--packages com.databricks:dbutils-api_2.12:0.0.5,io.delta:delta-core_2.12:1.0.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.2,com.amazonaws:aws-java-sdk-bundle:1.11.819,org.apache.hadoop:hadoop-aws:3.2.0 pyspark-shell --conf spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog pyspark-shell 
+      - PYSPARK_SUBMIT_ARGS=--packages co.datamechanics:delight_2.12:latest-SNAPSHOT,delta:delta-core_2.12:1.0.0,com.amazonaws:aws-java-sdk-bundle:1.11.819,org.apache.hadoop:hadoop-aws:3.2.0 pyspark-shell --conf spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog pyspark-shell --conf spark.delight.accessToken.secret $DELIGHT_SECRET --conf spark.extraListeners=co.datamechanics.delight.DelightListener --repositories https://oss.sonatype.org/content/repositories/snapshots 
     ports:
       - "9999:8888"
     volumes:

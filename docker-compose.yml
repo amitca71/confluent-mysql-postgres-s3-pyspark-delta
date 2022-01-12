@@ -104,6 +104,19 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
 
+
+      #docker run -p 8080:8080 -e KAFKA_BROKERS=127.0.0.1:9092 quay.io/cloudhut/kowl:master
+  kowl:
+    image: quay.io/cloudhut/kowl:master
+    hostname: kowl
+    depends_on:
+      - broker
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_BROKERS: 'broker:29092'  
+    networks:
+      - spark
   control-center:
     image: confluentinc/cp-enterprise-control-center:6.2.1
     hostname: control-center
